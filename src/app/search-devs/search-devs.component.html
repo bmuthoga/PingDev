@@ -1,3 +1,5 @@
-<p>
-  search-devs works!
-</p>
+<div>
+  <input placeholder="Location Name" #place>
+  <input placeholder="Language e.g. Java" #language>
+  <button (click)="search(place.value, language.value)">Search</button>
+</div>
