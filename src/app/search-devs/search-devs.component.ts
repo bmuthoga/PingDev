@@ -33,11 +33,24 @@ export class SearchDevsComponent implements OnInit {
         },
         error => {
           this.results = [];
-          this.error_text = "Darned Ninjutsu! No ninjas found. Try again  ¯¯\_(ツ)_/¯¯";
+          this.error_text = "Darned Ninjutsu! No ninjas found. Try again ツ";
           console.error(error);
         }
       );
     }
+  }
+
+  getDetails(username: string) {
+    this.searchService.getDevDetailsByUsername(username).subscribe(
+      userDetails => {
+        this.selectedDev = userDetails;
+        this.selected = true;
+      },
+      error => {
+        this.selected = false;
+        console.error(error);
+      }
+    )
   }
 
 }

@@ -1,21 +1,89 @@
-<div>
-  <input placeholder="Location Name" #place (keyup.enter)="search(place.value, language.value); place.value=''; language.value='';">
-  <input placeholder="Language e.g. Java" #language (keyup.enter)="search(place.value, language.value); place.value=''; language.value='';">
-  <button (click)="search(place.value, language.value); place.value=''; language.value='';">Search</button>
-</div>
+<div class="container">
+  <div class="row text-center">
 
-<p style="color: red" *ngIf="error_text">{{ error_text }}</p>
-
-<div>
-  <div *ngFor="let user of results">
-
-    <div>
-      <img src="{{ user.avatar_url }}" width="100" height="100">
-    </div>
-
-    <div>
-      <a href="{{ user.html_url }}">{{ user.login }}</a>
+    <div class="col-md-12">
+      <h2>Find developers in your city</h2>
+      <a href="https://applyhead.com" target="_blank">Made using Angular 4 (ApplyHead.Com)</a>
     </div>
 
   </div>
+
+  <div class="row">
+    <div class="col-md-12 col-md-offset-3">
+
+      <div class="form-inline">
+        <input placeholder="Location Name" class="form-control input-lg input" #place (keyup.enter)="search(place.value, language.value); place.value=''; language.value='';"/>
+        <input placeholder="Language e.g. Java" class="form-control input-lg input" #language (keyup.enter)="search(place.value, language.value); place.value=''; language.value='';"/>
+        <button class="btn btn-primary btn-lg" (click)="search(place.value, language.value); place.value=''; language.value='';">Search</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <p class="text-center" style="padding: 1em; color: red" *ngIf="error_text">{{ error_text }}</p>
+
+    <div [ngClass]="{'col-md-9': selected, 'col-md-12': !selected}">
+
+      <div class="user col-md-2 text-center" *ngFor="let user of results" (click)="getDetails(user.login)">
+
+        <div class="img_container">
+          <img src="{{ user.avatar_url }}" class="img-circle" width="100" height="100">
+        </div>
+
+        <div class="details-container">
+          <a href="{{ user.html_url }}" target="_blank" class="login_name">{{ user.login }}</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="results.length && selected" class="col-md-3">
+
+      <div class="box text-center">
+
+        <img src="{{ selectedDev.avatar_url }}" class="img-responsive img-circle">
+
+        <div class="details">
+
+          <div *ngIf="selectedDev.name">
+            <a href="{{ selectedDev.html_url }}" target="_blank"><h3>{{ selectedDev.name }}</h3></a>
+          </div>
+
+          <hr>
+          <div *ngIf="selectedDev.email">Email: {{ selectedDev.email }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.location">Location: {{ selectedDev.location }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.bio">Bio: {{ selectedDev.bio }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.updated_at">Last Seen: {{ selectedDev.updated_at | date }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.public_repos">Repos: {{ selectedDev.public_repos }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.public_gists">Gists: {{ selectedDev.public_gists }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.followers">Followers: {{ selectedDev.followers }}</div>
+
+          <hr>
+          <div *ngIf="selectedDev.created_at">Joined Github: {{ selectedDev.created_at | date }}</div>
+
+          <hr>
+          <button class="btn btn-sm btn-warning" (click)="selected = !selected">Back</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
